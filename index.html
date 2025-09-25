@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pesquisa: Uso de Telas</title>
+</head>
+<body>
+  <img src="pet_saude-removebg-preview.png" alt="Logo da Pesquisa" style="width:600px; display:block; margin:auto;">
+
+  <h2>Pesquisa: Uso de Telas</h2>
+  <p>Esta pesquisa é anônima e voluntária. Se estiver em sofrimento emocional, ligue <b>188 (CVV)</b>.</p>
+
+  <form id="pesquisaForm">
+    <label>Nome do aplicador:</label>
+    <input type="text" name="agente" required>
+
+    <label>Gênero do entrevistado(a):</label>
+    <select name="genero" required>
+      <option value="">Selecione...</option>
+      <option value="Masculino">Masculino</option>
+      <option value="Feminino">Feminino</option>
+      <option value="Outro">Outro</option>
+      <option value="Prefiro não responder">Prefiro não responder</option>
+    </select>
+
+    <label>1. Quanto tempo por dia você costuma passar no celular, computador, videogame ou TV?</label>
+    <select name="tempo_tela" required>
+      <option value="">Selecione...</option>
+      <option>Menos de 2 horas</option>
+      <option>Entre 2 e 4 horas</option>
+      <option>Entre 4 e 6 horas</option>
+      <option>Mais de 6 horas</option>
+    </select>
+
+    <label>2. O que você mais faz quando está nas telas?</label>
+    <select name="atividade" required>
+      <option value="">Selecione...</option>
+      <option>Redes sociais</option>
+      <option>Jogar online</option>
+      <option>Assistir vídeos/séries/filmes</option>
+      <option>Estudar/pesquisar</option>
+      <option>Conversar com amigos</option>
+      <option>Outro</option>
+    </select>
+    <textarea name="atividade_outro" rows="2" placeholder="Se marcou 'Outro', especifique aqui"></textarea>
+
+    <label>3. As redes sociais já fizeram você se sentir mal com sua aparência, vida ou conquistas?</label>
+    <select name="comparacao" required>
+      <option value="">Selecione...</option>
+      <option>Nunca</option>
+      <option>Às vezes</option>
+      <option>Muitas vezes</option>
+      <option>Sempre</option>
+    </select>
+
+    <label>4. Você sente que o uso de telas atrapalha seu sono, seus estudos ou sua concentração?</label>
+    <select name="impacto" required>
+      <option value="">Selecione...</option>
+      <option>Não</option>
+      <option>Sim, um pouco</option>
+      <option>Sim, bastante</option>
+    </select>
+
+    <label>5. Quando você está triste ou ansioso(a), costuma usar o celular para se distrair?</label>
+    <select name="emocao" required>
+      <option value="">Selecione...</option>
+      <option>Nunca</option>
+      <option>Às vezes</option>
+      <option>Muitas vezes</option>
+      <option>Sempre</option>
+    </select>
+
+    <label>6. O que mais te ajuda a se sentir bem fora das telas?</label>
+    <textarea name="fora_telas" rows="3" placeholder="Escreva sua resposta"></textarea>
+
+    <button type="submit">Enviar Resposta</button>
+  </form>
+
+  <div class="msg" id="msg"></div>
+
+  <script>
+    const scriptURL = "https://script.google.com/macros/s/AKfycbzjCGHvDALbcWgV_V6Yuy4mZVSGIAh7D6vpYg0If9M0mudLzOrM0tbM5D9lqZdajU7CMw/exec";
+
+    document.getElementById("pesquisaForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const formData = new FormData(this);
+      const data = Object.fromEntries(formData.entries());
+
+      fetch(scriptURL, {
+        method: "POST",
+        body: JSON.stringify(data)
+      })
+      .then(res => {
+        document.getElementById("msg").innerText = "Resposta registrada com sucesso!";
+        this.reset();
+      })
+      .catch(err => {
+        document.getElementById("msg").innerText = "Erro ao enviar resposta.";
+      });
+    });
+  </script>
+</body>
+</html>
